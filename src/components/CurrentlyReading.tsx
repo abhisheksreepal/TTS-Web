@@ -16,5 +16,21 @@ export const CurrentlyReading = ({
   currentSentenceIdx: number;
   sentences: string[];
 }) => {
-  return <div data-testid="currently-reading"></div>;
+  return (
+    <div data-testid="currently-reading">
+      {sentences.map((sentence, index) => {
+        return (
+          <p key={index} data-testid="current-sentence">
+            {sentence}
+            <span data-testid="current-word">
+              {sentence.substring(currentWordRange[0], currentWordRange[1])}
+            </span>
+          </p>
+        );
+      })}
+      {sentences.map((sentence, index) => {
+        return <span key={index}>{sentence}</span>;
+      })}
+    </div>
+  );
 };

@@ -1,4 +1,5 @@
-import { PlayingState } from '../lib/speech';
+import { useState } from "react";
+import { PlayingState, createSpeechEngine } from "../lib/speech";
 
 /*
  * Implement a component that provides basic UI options such as playing, pausing and loading new content
@@ -11,11 +12,22 @@ export const Controls = ({
   play,
   pause,
   loadNewContent,
+  state,
 }: {
   play: () => void;
   pause: () => void;
   loadNewContent: () => void;
   state: PlayingState;
 }) => {
-  return <div></div>;
+  return (
+    <div>
+      {" "}
+      {state === "initialized" || state === "paused" || state === "ended" ? (
+        <button onClick={play}>Play</button>
+      ) : (
+        <button onClick={pause}>Pause</button>
+      )}
+      <button onClick={loadNewContent}>Load new content</button>
+    </div>
+  );
 };

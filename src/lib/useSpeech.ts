@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { PlayingState } from './speech';
+import { PlayingState, createSpeechEngine } from "./speech";
 
 /*
   @description
@@ -12,12 +12,22 @@ import { PlayingState } from './speech';
 */
 const useSpeech = (sentences: Array<string>) => {
   const [currentSentenceIdx, setCurrentSentenceIdx] = useState(0);
-  const [currentWordRange, setCurrentWordRange] = useState([0, 0]);
+  const [currentWordRange, setCurrentWordRange] = useState<[number, number]>([
+    0, 0,
+  ]);
 
-  const [playbackState, setPlaybackState] = useState<PlayingState>("paused");
+  const [playbackState, setPlaybackState] =
+    useState<PlayingState>("initialized");
 
-  const play = () => {};
-  const pause = () => {};
+  const onStateUpdate = (state: PlayingState) => {
+    setPlaybackState(state);
+  };
+
+  const { play, pause, state, cancel, load } = createSpeechEngine({
+    onBoundary: () => {},
+    onEnd: () => {},
+    onStateUpdate: onStateUpdate,
+  });
 
   return {
     currentSentenceIdx,
@@ -25,6 +35,7 @@ const useSpeech = (sentences: Array<string>) => {
     playbackState,
     play,
     pause,
+    load,
   };
 };
 
