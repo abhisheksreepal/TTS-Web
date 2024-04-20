@@ -41,16 +41,25 @@ function App() {
    * sentences: ['This is a sentence.', 'This is another sentence', 'This is a longer piece of content']
    */
 
-  const parseContent = (data: string): string[] => {
+  const parseContent = (data: string) => {
     let out = [];
-    const test = data.matchAll(/<s>.*<\/s>/g);
+    let test = data.match(/<s>.*<\/s>/g);
+    console.log(test);
     // const test = data.split("<s>");
-    console.log(test);
-    // while (test.next() !== null) {
-    //   console.log(test);
-    // }
-    console.log(test);
-    return [];
+    if (test && test.length > 0) {
+      out = test[0].split("<s>");
+    }
+    out = out.filter((item) => {
+      return item !== "";
+    });
+
+    out = out.map((item) => {
+      return item.replace("</s>", "");
+    });
+
+    console.log(out);
+
+    return out;
   };
 
   // useEffect(() => {
