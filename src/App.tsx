@@ -50,13 +50,13 @@ function App() {
     if (test && test.length > 0) {
       out = test[0].split("<s>");
     }
-    out = out.filter((item) => {
-      return item !== "";
-    });
-
-    out = out.map((item) => {
-      return item.replace("</s>", "");
-    });
+    out = out
+      .filter((item) => {
+        return item !== "";
+      })
+      .map((item) => {
+        return item.replace("</s>", "");
+      });
 
     console.log(out);
 
