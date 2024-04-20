@@ -24,8 +24,9 @@ function App() {
   const loadData = () => {
     fetch(GET_CONTENT).then((data) => {
       data.json().then((content) => {
-        setSentences(parseContent(content.content));
-        load(content);
+        let out = parseContent(content.content);
+        setSentences(out);
+        load(content.content);
       });
     });
   };
@@ -42,7 +43,7 @@ function App() {
    */
 
   const parseContent = (data: string) => {
-    let out = [];
+    let out: string[] = [];
     let test = data.match(/<s>.*<\/s>/g);
     console.log(test);
     // const test = data.split("<s>");
