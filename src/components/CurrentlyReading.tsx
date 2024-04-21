@@ -16,21 +16,46 @@ export const CurrentlyReading = ({
   currentSentenceIdx: number;
   sentences: string[];
 }) => {
+  // console.log(`${sentences[currentSentenceIdx]}`);
+  // console.log(`-- 0 - ${currentWordRange[0]}---`);
+
+  // console.log(sentences[currentSentenceIdx]?.substring(0, currentWordRange[0]));
+  // console.log(`-- ${currentWordRange[0]}- ${currentWordRange[1]} --`);
+  // console.log(
+  //   sentences[currentSentenceIdx]?.substring(
+  //     currentWordRange[0],
+  //     currentWordRange[0] + currentWordRange[1]
+  //   )
+  // );
+  // console.log(`-- ${currentWordRange[1]}- lenght --`);
+  // console.log(
+  //   sentences[currentSentenceIdx]?.substring(
+  //     currentWordRange[0] + currentWordRange[1]
+  //   )
+  // );
   return (
-    <div data-testid="currently-reading">
-      {sentences.map((sentence, index) => {
-        return (
-          <p key={index} data-testid="current-sentence">
-            {sentence}
-            <span data-testid="current-word">
-              {sentence.substring(currentWordRange[0], currentWordRange[1])}
+    <>
+      <div data-testid="currently-reading" className="currently-reading">
+        {
+          <p data-testid="current-sentence" className="currently-reading-text">
+            {sentences[currentSentenceIdx]?.substring(0, currentWordRange[0])}
+            <span data-testid="current-word" className="currentword">
+              {sentences[currentSentenceIdx]?.substring(
+                currentWordRange[0],
+                currentWordRange[0] + currentWordRange[1]
+              )}
             </span>
+            {sentences[currentSentenceIdx]?.substring(
+              currentWordRange[0] + currentWordRange[1]
+            )}
           </p>
-        );
-      })}
-      {sentences.map((sentence, index) => {
-        return <span key={index}>{sentence}</span>;
-      })}
-    </div>
+        }
+      </div>
+      <p>
+        {sentences.map((sentence, index) => {
+          return <span key={index}>{sentence}</span>;
+        })}
+      </p>
+    </>
   );
 };

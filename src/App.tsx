@@ -9,7 +9,8 @@ import { useSpeech } from "./lib/useSpeech";
 const GET_CONTENT = "http://localhost:5174/content";
 
 function App() {
-  // const [sentences, setSentences] = useState<Array<string>>([]);
+  const [sentences, setSentences] = useState<string[]>([]);
+
   const {
     currentSentenceIdx,
     currentWordRange,
@@ -17,9 +18,8 @@ function App() {
     pause,
     load,
     playbackState,
-  } = useSpeech([]);
-
-  const [sentences, setSentences] = useState<string[]>([]);
+    parseContent,
+  } = useSpeech(sentences);
 
   const loadData = () => {
     fetch(GET_CONTENT).then((data) => {
@@ -42,27 +42,6 @@ function App() {
    * sentences: ['This is a sentence.', 'This is another sentence', 'This is a longer piece of content']
    */
 
-  const parseContent = (data: string) => {
-    let out: string[] = [];
-    let test = data.match(/<s>.*<\/s>/g);
-    console.log(test);
-    // const test = data.split("<s>");
-    if (test && test.length > 0) {
-      out = test[0].split("<s>");
-    }
-    out = out
-      .filter((item) => {
-        return item !== "";
-      })
-      .map((item) => {
-        return item.replace("</s>", "");
-      });
-
-    console.log(out);
-
-    return out;
-  };
-
   // useEffect(() => {
   //   loadData();
   // }, []);
@@ -73,7 +52,7 @@ function App() {
       <div>
         <CurrentlyReading
           sentences={sentences}
-          currentSentenceIdx={currentSentenceIdx}
+          currentSentenceIdx={currentSentenceIdx.current}
           currentWordRange={currentWordRange}
         />
       </div>
